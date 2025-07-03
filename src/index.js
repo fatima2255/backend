@@ -3,8 +3,9 @@ const dotenv = require('dotenv');
 require('dotenv').config();
 const connectDB = require('../src/db');
 const cors = require('cors');
-const authRoute = require('./routes/auth');
 
+const authRoute = require('./routes/auth');
+const dashboardRoute = require('./routes/dashboard');
 dotenv.config();
 
 // Connect to MongoDB
@@ -23,6 +24,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/auth', authRoute);
+app.use('/api', dashboardRoute);
 
 
 // Start server
