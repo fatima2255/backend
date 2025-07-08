@@ -3,8 +3,8 @@ const router = express.Router();
 const authMiddleware = require("../middlewares/auth.middleware");
 const User = require("../models/User");
 
-// GET /api/dashboard - protected route
-router.get("/dashboard", authMiddleware, async (req, res) => {
+// GET /api/getAllUsers - protected route
+router.get("/getAllUsers", authMiddleware, async (req, res) => {
   try {
     const users = await User.find().select("-password"); // exclude passwords
     res.json(users);
