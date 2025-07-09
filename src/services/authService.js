@@ -3,15 +3,17 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 // Generate JWT Tokens
-const generateTokens = (userId) => {
+const generateTokens = (user) => {
   const accessToken = jwt.sign(
-    { userId },
+    {
+      userId: user._id, role: user.role
+    },
     process.env.ACCESS_TOKEN_SECRET,
     { expiresIn: '15m' }
   );
 
   const refreshToken = jwt.sign(
-    { userId },
+    { userId: user._id, role: user.role },
     process.env.REFRESH_TOKEN_SECRET,
     { expiresIn: '7d' }
   );
@@ -20,7 +22,7 @@ const generateTokens = (userId) => {
 };
 
 // Signup function
-const registerUser = async ({ firstName, lastName, username, email, password }) => {
+const registerUser = async ({ firstName, lastName, username, email, password, role }) => {
   const existingUser = await User.findOne({ email });
   if (existingUser) {
     throw new Error('User already exists');
@@ -34,6 +36,7 @@ const registerUser = async ({ firstName, lastName, username, email, password }) 
     username,
     email,
     password: hashedPassword,
+    role,
   });
 
   await user.save();
@@ -51,8 +54,14 @@ const loginUser = async ({ username, password }) => {
     throw new Error('Invalid credentials');
   }
 
-  const tokens = generateTokens(user._id);
-  return tokens;
+  const tokens = generateTokens(user);
+  return {
+    accessToken: tokens.accessToken,
+    refreshToken: tokens.refreshToken,
+    user: {
+      role: user.role,
+    },
+  };
 };
 
 module.exports = {
