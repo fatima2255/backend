@@ -7,6 +7,8 @@ const cors = require('cors');
 const authRoute = require('./routes/auth');
 const dashboardRoute = require('./routes/dashboard');
 const productRoute = require('./routes/product');
+const resetPasswordRoutes = require('./routes/resetPassword');
+
 dotenv.config();
 
 // Connect to MongoDB
@@ -27,7 +29,7 @@ app.get('/', (req, res) => {
 app.use('/api/auth', authRoute);
 app.use('/api', dashboardRoute);
 app.use('/api/products', productRoute);
-
+app.use('/api', resetPasswordRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;
