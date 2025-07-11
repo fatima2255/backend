@@ -8,7 +8,8 @@ const authRoute = require('./routes/auth');
 const dashboardRoute = require('./routes/dashboard');
 const productRoute = require('./routes/product');
 const resetPasswordRoutes = require('./routes/resetPassword');
-
+const cartRoute = require('./routes/cart');
+const checkoutRoute = require('./routes/checkout');
 dotenv.config();
 
 // Connect to MongoDB
@@ -30,6 +31,8 @@ app.use('/api/auth', authRoute);
 app.use('/api', dashboardRoute);
 app.use('/api/products', productRoute);
 app.use('/api', resetPasswordRoutes);
+app.use('/api/cart', cartRoute);
+app.use('/api/cart', checkoutRoute);
 
 // Start server
 const PORT = process.env.PORT || 5000;

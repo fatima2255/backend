@@ -6,10 +6,11 @@ const User = require('../models/User');
 const generateTokens = (user) => {
   const accessToken = jwt.sign(
     {
-      userId: user._id, role: user.role
+      userId: user._id, 
+      role: user.role
     },
     process.env.ACCESS_TOKEN_SECRET,
-    { expiresIn: '15m' }
+    { expiresIn: '1h' }
   );
 
   const refreshToken = jwt.sign(
@@ -55,11 +56,13 @@ const loginUser = async ({ username, password }) => {
   }
 
   const tokens = generateTokens(user);
+  
   return {
     accessToken: tokens.accessToken,
     refreshToken: tokens.refreshToken,
     user: {
       role: user.role,
+      id: user._id.toString(), 
     },
   };
 };
