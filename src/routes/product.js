@@ -8,10 +8,11 @@ const {
   getProducts,
   updateProduct,
   deleteProduct,
+  getPaginatedProducts,
 } = require('../controllers/productController');
 
 // view all route
-router.get('/', authMiddleware, productAccess('view'), getProducts);
+router.get('/', authMiddleware, productAccess('view'), getPaginatedProducts);
 
 // add product route
 router.post('/add', authMiddleware, productAccess('add'), addProduct);

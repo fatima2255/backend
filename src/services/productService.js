@@ -17,3 +17,4 @@ exports.updateProductById = async (id, updateData) => {
 exports.deleteProductById = async (id) => {
   return await Product.findByIdAndDelete(id);
 };
+
